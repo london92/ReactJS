@@ -46,22 +46,113 @@
 
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(34);
+	var List = React.createClass({
+	    displayName: 'List',
 
-	var Paragraph = React.createClass({
-	  displayName: 'Paragraph',
-
-
-	  render: function () {
-	    return React.createElement(
-	      'p',
-	      { style: { "color": "red", "fontSize": "40px" } },
-	      'Hello World'
-	    );
-	  }
+	    getDefaultProps: function () {
+	        return {
+	            users: [{ name: "Anne Montgomery", gender: "Female" }, { name: "Annie George", gender: "Female" }, { name: "Gary Butler", gender: "Male" }, { name: "Lisa Mendoza", gender: "Female" }, { name: "Marilyn Henry", gender: "Female" }, { name: "Johnny Tucker", gender: "Male" }, { name: "Chris Jacobs", gender: "Male" }, { name: "Benjamin James", gender: "Male" }]
+	        };
+	    },
+	    getInitialState: function () {
+	        return {
+	            output_users: this.props.users,
+	            color: "black",
+	            checkbox: true
+	        };
+	    },
+	    handler: function (e) {
+	        var arr = this.props.users;
+	        var new_arr = arr.slice(0, e.target.value);
+	        this.setState({ output_users: new_arr });
+	    },
+	    random_color: function () {
+	        var h = Math.floor(Math.random() * (255 - 1) + 1);
+	        var s = Math.floor(Math.random() * (100 - 1) + 1) + '%';
+	        var l = '50%';
+	        var randomColor = 'hsl(' + h + ',' + s + ',' + l + ')';
+	        return randomColor;
+	    },
+	    componentWillUpdate: function () {
+	        this.setState({ color: this.random_color() });
+	    },
+	    change_output: function () {
+	        this.setState({ checkbox: !this.state.checkbox });
+	    },
+	    render: function () {
+	        if (this.state.checkbox) {
+	            return React.createElement(
+	                'div',
+	                null,
+	                React.createElement(
+	                    'ol',
+	                    { style: { "color": this.state.color } },
+	                    this.state.output_users.map(function (user) {
+	                        return React.createElement(
+	                            'li',
+	                            { key: user.name },
+	                            'Name: ',
+	                            user.name,
+	                            ', gender:',
+	                            user.gender
+	                        );
+	                    })
+	                ),
+	                React.createElement('input', { type: 'text', onChange: this.handler }),
+	                React.createElement('input', { type: 'checkbox', onChange: this.change_output })
+	            );
+	        } else {
+	            return React.createElement(
+	                'div',
+	                null,
+	                React.createElement(
+	                    'table',
+	                    { style: { "color": this.state.color } },
+	                    this.state.output_users.map(function (user) {
+	                        return React.createElement(
+	                            'tr',
+	                            null,
+	                            React.createElement(
+	                                'td',
+	                                null,
+	                                'Name: ',
+	                                user.name
+	                            ),
+	                            React.createElement(
+	                                'td',
+	                                null,
+	                                'gender:',
+	                                user.gender
+	                            )
+	                        );
+	                    })
+	                ),
+	                React.createElement('input', { type: 'text', onChange: this.handler }),
+	                React.createElement('input', { type: 'checkbox', onChange: this.change_output })
+	            );
+	        }
+	    }
 	});
+	var Item = React.createClass({
+	    displayName: 'Item',
 
+	    render: function () {
+	        return React.createElement(
+	            'li',
+	            null,
+	            'Name: ',
+	            this.props.name,
+	            ', gender : ',
+	            this.props.gender
+	        );
+	    }
+	});
 	var container = document.getElementById('example');
-	ReactDOM.render(React.createElement(Paragraph, null), container);
+	ReactDOM.render(React.createElement(
+	    List,
+	    null,
+	    React.createElement(Item, null)
+	), container);
 
 /***/ },
 /* 1 */

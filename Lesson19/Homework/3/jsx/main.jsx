@@ -3,11 +3,7 @@ var ReactDOM = require('react-dom');
 
 
 var Paragraph = React.createClass({
-    getDefaultProps(){
-      return{
-
-      }
-    },
+  
     render: function() {
         return (
            <p style={{"color":"red","fontSize": "40px"}}>Hello World</p>
