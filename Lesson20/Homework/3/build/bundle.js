@@ -46,6 +46,23 @@
 
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(34);
+	var SetMyMixin = {
+	    getInitialState: function () {
+	        return {
+	            color: this.random_color()
+	        };
+	    },
+	    random_color: function () {
+	        var h = Math.floor(Math.random() * (255 - 1) + 1);
+	        var s = Math.floor(Math.random() * (100 - 1) + 1) + '%';
+	        var l = '50%';
+	        var randomColor = 'hsl(' + h + ',' + s + ',' + l + ')';
+	        return randomColor;
+	    },
+	    componentWillReceiveProps: function () {
+	        this.setState({ color: this.random_color() });
+	    }
+	};
 	var List = React.createClass({
 	    displayName: 'List',
 
@@ -56,27 +73,16 @@
 	    },
 	    getInitialState: function () {
 	        return {
-	            output_users: this.props.users,
-	            color: "black",
+	            output: this.props.users,
 	            checkbox: true
 	        };
 	    },
 	    handler: function (e) {
 	        var arr = this.props.users;
 	        var new_arr = arr.slice(0, e.target.value);
-	        this.setState({ output_users: new_arr });
+	        this.setState({ output: new_arr });
 	    },
-	    random_color: function () {
-	        var h = Math.floor(Math.random() * (255 - 1) + 1);
-	        var s = Math.floor(Math.random() * (100 - 1) + 1) + '%';
-	        var l = '50%';
-	        var randomColor = 'hsl(' + h + ',' + s + ',' + l + ')';
-	        return randomColor;
-	    },
-	    componentWillUpdate: function () {
-	        this.setState({ color: this.random_color() });
-	    },
-	    change_output: function () {
+	    change_view: function () {
 	        this.setState({ checkbox: !this.state.checkbox });
 	    },
 	    render: function () {
@@ -86,20 +92,13 @@
 	                null,
 	                React.createElement(
 	                    'ol',
-	                    { style: { "color": this.state.color } },
-	                    this.state.output_users.map(function (user) {
-	                        return React.createElement(
-	                            'li',
-	                            { key: user.name },
-	                            'Name: ',
-	                            user.name,
-	                            ', gender:',
-	                            user.gender
-	                        );
+	                    null,
+	                    this.state.output.map(function (user) {
+	                        return React.createElement(Item, { key: user.name, name: user.name, gender: user.gender });
 	                    })
 	                ),
 	                React.createElement('input', { type: 'text', onChange: this.handler }),
-	                React.createElement('input', { type: 'checkbox', onChange: this.change_output })
+	                React.createElement('input', { type: 'checkbox', onChange: this.change_view })
 	            );
 	        } else {
 	            return React.createElement(
@@ -107,43 +106,53 @@
 	                null,
 	                React.createElement(
 	                    'table',
-	                    { style: { "color": this.state.color } },
-	                    this.state.output_users.map(function (user) {
-	                        return React.createElement(
-	                            'tr',
-	                            null,
-	                            React.createElement(
-	                                'td',
-	                                null,
-	                                'Name: ',
-	                                user.name
-	                            ),
-	                            React.createElement(
-	                                'td',
-	                                null,
-	                                'gender:',
-	                                user.gender
-	                            )
-	                        );
+	                    null,
+	                    this.state.output.map(function (user) {
+	                        return React.createElement(Row, { key: user.name, name: user.name, gender: user.gender });
 	                    })
 	                ),
 	                React.createElement('input', { type: 'text', onChange: this.handler }),
-	                React.createElement('input', { type: 'checkbox', onChange: this.change_output })
+	                React.createElement('input', { type: 'checkbox', onChange: this.change_view })
 	            );
 	        }
 	    }
+
 	});
 	var Item = React.createClass({
 	    displayName: 'Item',
 
+	    mixins: [SetMyMixin],
 	    render: function () {
 	        return React.createElement(
 	            'li',
-	            null,
-	            'Name: ',
+	            { style: { "color": this.state.color } },
+	            'Name:',
 	            this.props.name,
-	            ', gender : ',
+	            ', gender:',
 	            this.props.gender
+	        );
+	    }
+	});
+	var Row = React.createClass({
+	    displayName: 'Row',
+
+	    mixins: [SetMyMixin],
+	    render: function () {
+	        return React.createElement(
+	            'tr',
+	            { style: { "color": this.state.color } },
+	            React.createElement(
+	                'td',
+	                null,
+	                'Name:',
+	                this.props.name
+	            ),
+	            React.createElement(
+	                'td',
+	                null,
+	                'gender:',
+	                this.props.gender
+	            )
 	        );
 	    }
 	});

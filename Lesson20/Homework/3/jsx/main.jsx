@@ -1,81 +1,92 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
-var List = React.createClass({
-    getDefaultProps: function() {
-        return {
-            users: [{name:"Anne Montgomery",gender:"Female"},
-                {name:"Annie George",gender:"Female"},
-                {name:"Gary Butler",gender:"Male"},
-                {name:"Lisa Mendoza",gender:"Female"},
-                {name:"Marilyn Henry",gender:"Female"},
-                {name:"Johnny Tucker",gender:"Male"},
-                {name:"Chris Jacobs",gender:"Male"},
-                {name:"Benjamin James",gender:"Male"}],
-        }
-    },
+var SetMyMixin ={
     getInitialState: function () {
         return{
-            output_users:this.props.users,
-            color: "black",
-            checkbox: true
+            color: this.random_color()
         }
     },
-    handler: function (e) {
-        var arr = this.props.users
-        var new_arr = arr.slice(0, e.target.value)
-        this.setState({output_users: new_arr})
-    },
-    random_color:function () {
+    random_color: function (){
         var h = Math.floor(Math.random() * (255 - 1) + 1);
         var s = Math.floor(Math.random() * (100 - 1) + 1) + '%';
         var l = '50%';
         var randomColor = 'hsl(' + h + ',' + s + ',' + l + ')';
         return randomColor;
     },
-    componentWillUpdate: function () {
+    componentWillReceiveProps: function () {
         this.setState({color:this.random_color()})
+    }
+}
+var List = React.createClass({
+    getDefaultProps: function () {
+        return{
+            users : [{name:"Anne Montgomery",gender:"Female"},
+                {name:"Annie George",gender:"Female"},
+                {name:"Gary Butler",gender:"Male"},
+                {name:"Lisa Mendoza",gender:"Female"},
+                {name:"Marilyn Henry",gender:"Female"},
+                {name:"Johnny Tucker",gender:"Male"},
+                {name:"Chris Jacobs",gender:"Male"},
+                {name:"Benjamin James",gender:"Male"}]
+        }
     },
-   change_output: function () {
-       this.setState({checkbox: !this.state.checkbox})
-   },
+    getInitialState: function () {
+        return{
+            output:this.props.users,
+            checkbox: true
+        }
+    },
+    handler: function (e) {
+        var arr = this.props.users
+        var new_arr = arr.slice(0, e.target.value)
+        this.setState({output: new_arr})
+    },
+    change_view: function () {
+      this.setState({checkbox:!this.state.checkbox})  
+    },
     render: function () {
         if(this.state.checkbox){
-        return(
-            
+            return(
                 <div>
-                    <ol style={{"color":this.state.color}}>
-                        {this.state.output_users.map(function (user) {
-                            return <li key={user.name}>Name: {user.name}, gender:{user.gender}</li>
+                    <ol>
+                        {this.state.output.map(function (user) {
+                            return <Item key={user.name} name={user.name} gender={user.gender}></Item>
                         })}
                     </ol>
                     <input type="text" onChange={this.handler} />
-                    <input type="checkbox" onChange={this.change_output}/>
+                    <input type="checkbox" onChange={this.change_view}/>
                 </div>
-        
-        )}
+            )
+        }
         else {
             return(
                 <div>
-                    <table style={{"color":this.state.color}}>
-                        {this.state.output_users.map(function (user) {
-                            return(
-                                <tr>
-                                    <td>Name: {user.name}</td>
-                                    <td>gender:{user.gender}</td>
-                                </tr>)
+                    <table>
+                        {this.state.output.map(function (user) {
+                            return <Row key={user.name} name={user.name} gender={user.gender}></Row>
                         })}
                     </table>
                     <input type="text" onChange={this.handler} />
-                    <input type="checkbox" onChange={this.change_output}/>
+                    <input type="checkbox" onChange={this.change_view}/>
                 </div>
             )
         }
     }
+
 })
-var Item = React.createClass({
-    render: function () {
+var Item = React.createClass( {
+    mixins:[SetMyMixin],
+    render:function () {
         return(
-            <li>Name: {this.props.name}, gender : {this.props.gender}</li>
+            <li style={{"color":this.state.color}}>Name:{this.props.name}, gender:{this.props.gender}</li>
+        )
+    }
+})
+var Row = React.createClass( {
+    mixins:[SetMyMixin],
+    render:function () {
+        return(
+            <tr style={{"color":this.state.color}}><td>Name:{this.props.name}</td><td>gender:{this.props.gender}</td></tr>
         )
     }
 })

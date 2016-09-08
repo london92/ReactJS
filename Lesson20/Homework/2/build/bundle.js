@@ -56,14 +56,37 @@
 	    },
 	    getInitialState: function () {
 	        return {
-	            output_users: this.props.users,
-	            color: "black"
+	            output: this.props.users
 	        };
 	    },
 	    handler: function (e) {
 	        var arr = this.props.users;
 	        var new_arr = arr.slice(0, e.target.value);
-	        this.setState({ output_users: new_arr });
+	        this.setState({ output: new_arr });
+	    },
+	    render: function () {
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement(
+	                'ol',
+	                null,
+	                this.state.output.map(function (user) {
+	                    return React.createElement(Item, { key: user.name, name: user.name, gender: user.gender });
+	                })
+	            ),
+	            React.createElement('input', { type: 'text', onChange: this.handler })
+	        );
+	    }
+
+	});
+	var Item = React.createClass({
+	    displayName: 'Item',
+
+	    getInitialState: function () {
+	        return {
+	            color: this.random_color()
+	        };
 	    },
 	    random_color: function () {
 	        var h = Math.floor(Math.random() * (255 - 1) + 1);
@@ -72,44 +95,16 @@
 	        var randomColor = 'hsl(' + h + ',' + s + ',' + l + ')';
 	        return randomColor;
 	    },
-	    componentWillUpdate: function () {
+	    componentWillReceiveProps: function () {
 	        this.setState({ color: this.random_color() });
 	    },
-	    shouldComponentUpdate: function () {
-	        return true;
-	    },
-	    render: function () {
-	        return React.createElement(
-	            'div',
-	            null,
-	            React.createElement(
-	                'ol',
-	                { style: { "color": this.state.color } },
-	                this.state.output_users.map(function (user) {
-	                    return React.createElement(
-	                        'li',
-	                        { key: user.name },
-	                        'Name: ',
-	                        user.name,
-	                        ', gender:',
-	                        user.gender
-	                    );
-	                })
-	            ),
-	            React.createElement('input', { type: 'text', onChange: this.handler })
-	        );
-	    }
-	});
-	var Item = React.createClass({
-	    displayName: 'Item',
-
 	    render: function () {
 	        return React.createElement(
 	            'li',
-	            null,
-	            'Name: ',
+	            { style: { "color": this.state.color } },
+	            'Name:',
 	            this.props.name,
-	            ', gender : ',
+	            ', gender:',
 	            this.props.gender
 	        );
 	    }
