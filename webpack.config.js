@@ -15,7 +15,12 @@ module.exports = {
         "Lesson20/Homework/1/build/bundle": "./Lesson20/Homework/1/jsx/main.jsx",
         "Lesson20/Homework/2/build/bundle": "./Lesson20/Homework/2/jsx/main.jsx",
         "Lesson20/Homework/3/build/bundle": "./Lesson20/Homework/3/jsx/main.jsx",
-
+        "Lesson21/Classwork/1/build/bundle": "./Lesson21/Classwork/1/jsx/main.jsx",
+        "Lesson21/Classwork/2/build/bundle": "./Lesson21/Classwork/2/jsx/main.jsx",
+        "Lesson21/Classwork/3/build/bundle": "./Lesson21/Classwork/3/jsx/main.jsx",
+        "Lesson21/Homework/1/build/bundle": "./Lesson21/Homework/1/jsx/main.jsx",
+        "Lesson21/Homework/2/build/bundle": "./Lesson21/Homework/2/jsx/main.jsx",
+        "Lesson21/Homework/3/build/bundle": "./Lesson21/Homework/3/jsx/main.jsx",
     } ,
 
     output: {
