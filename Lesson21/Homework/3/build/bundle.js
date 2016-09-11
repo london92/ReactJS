@@ -46,43 +46,89 @@
 
 	var React = __webpack_require__(1);
 	var ReactDOM = __webpack_require__(34);
+	var ValidationMixin = {
+	    getInitialState: function () {
+	        return {
+	            inputError: ""
+	        };
+	    },
+	    validation: function (e) {
+	        if (e.target == document.getElementsByTagName("input")[0]) {
+	            var testName = /^[a-zA-Z]+$/;
+	            this.setState({ name: e.target.value });
+	            if (document.getElementsByTagName("input")[0].value.search(testName) != -1) {
+	                this.setState({ inputError: "" });
+	            } else {
+	                if (e.target.value == "") {
+	                    this.setState({ inputError: "" });
+	                } else {
+	                    this.setState({ inputError: "Name should contain latin letters" });
+	                }
+	            }
+	        } else if (e.target == document.getElementsByTagName("input")[1]) {
+	            var testEmail = /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i;
+	            this.setState({ name: e.target.value });
+	            if (document.getElementsByTagName("input")[1].value.search(testEmail) != -1) {
+	                this.setState({ inputError: "" });
+	            } else {
+	                if (e.target.value == "") {
+	                    this.setState({ inputError: "" });
+	                } else {
+	                    this.setState({ inputError: "Invalid Email" });
+	                }
+	            }
+	        } else if (e.target == document.getElementsByTagName("input")[2]) {
+	            var testTel = /^[0-9]{1,10}$/;
+	            this.setState({ name: e.target.value });
+	            if (document.getElementsByTagName("input")[2].value.search(testTel) != -1) {
+	                this.setState({ inputError: "" });
+	            } else {
+	                if (e.target.value == "") {
+	                    this.setState({ inputError: "" });
+	                } else {
+	                    this.setState({ inputError: "Invalid Telephone" });
+	                }
+	            }
+	        }
+	    }
+	};
 	var Form = React.createClass({
 	    displayName: 'Form',
 
-	    getInitialState: function () {
-	        return {
-	            result: "",
-	            number_1: "",
-	            number_2: ""
-	        };
-	    },
-	    firstNumberHandler: function (e) {
-	        this.setState({ number_1: e.target.value });
-	    },
-	    secondNumberHandler: function (e) {
-	        this.setState({ number_2: e.target.value });
-	    },
-	    plusHandler: function () {
-	        this.setState({ result: +this.state.number_1 + +this.state.number_2 });
-	    },
-	    minusHandler: function () {
-	        this.setState({ result: +this.state.number_1 - +this.state.number_2 });
-	    },
-	    multiplyHandler: function () {
-	        this.setState({ result: +this.state.number_1 * +this.state.number_2 });
-	    },
-	    divideHandler: function () {
-	        this.setState({ result: +this.state.number_1 / +this.state.number_2 });
-	    },
 	    render: function () {
 	        return React.createElement(
 	            'form',
 	            null,
-	            React.createElement('input', { type: 'text', onInput: this.nameHandler, placeholder: 'Name', className: 'input-lg form-control' }),
-	            React.createElement('input', { type: 'text', onInput: this.emailHandler, placeholder: 'Email', className: 'input-lg form-control', className: 'input-lg form-control' }),
-	            React.createElement('input', { type: 'text', onInput: this.telHandler, placeholder: 'Telephone', className: 'input-lg form-control' }),
-	            React.createElement('textarea', { onInput: this.messageHandler, placeholder: 'Message', className: 'input-lg form-control' })
+	            React.createElement(Input, { type: 'text', placeholder: 'Name' }),
+	            React.createElement(Input, { type: 'text', placeholder: 'Email' }),
+	            React.createElement(Input, { type: 'text', placeholder: 'Telephone' }),
+	            React.createElement(Text, { placeholder: 'Message', rows: '5' })
 	        );
+	    }
+	});
+	var Input = React.createClass({
+	    displayName: 'Input',
+
+	    mixins: [ValidationMixin],
+	    render: function () {
+	        return React.createElement(
+	            'div',
+	            null,
+	            React.createElement('input', { type: this.props.type, placeholder: this.props.placeholder, onInput: this.validation, className: 'input-lg form-control' }),
+	            React.createElement(
+	                'span',
+	                { className: 'error' },
+	                this.state.inputError
+	            )
+	        );
+	    }
+	});
+	var Text = React.createClass({
+	    displayName: 'Text',
+
+	    mixins: [ValidationMixin],
+	    render: function () {
+	        return React.createElement('textarea', { placeholder: this.props.placeholder, rows: this.props.rows, className: 'input-lg form-control' });
 	    }
 	});
 	var container = document.getElementById("example");
