@@ -21,6 +21,8 @@ module.exports = {
         "Lesson21/Homework/1/build/bundle": "./Lesson21/Homework/1/jsx/main.jsx",
         "Lesson21/Homework/2/build/bundle": "./Lesson21/Homework/2/jsx/main.jsx",
         "Lesson21/Homework/3/build/bundle": "./Lesson21/Homework/3/jsx/main.jsx",
+        "Lesson22/Classwork/1/build/bundle": "./Lesson22/Classwork/1/src/main.js",
+        "Lesson22/Classwork/3/build/bundle": "./Lesson22/Classwork/3/src/main.jsx",
     } ,
 
     output: {
