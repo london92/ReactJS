@@ -44,12 +44,17 @@
 /* 0 */
 /***/ function(module, exports) {
 
-	let options = {
+	"use strict";
+
+	var options = {
 	    title: "Menu",
 	    width: 100,
 	    height: 200
 	};
-	let { title, height, width } = options;
+	var title = options.title;
+	var height = options.height;
+	var width = options.width;
+
 	alert(title);
 	alert(width);
 	alert(height);
