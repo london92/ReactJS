@@ -23,6 +23,9 @@ module.exports = {
         "Lesson21/Homework/3/build/bundle": "./Lesson21/Homework/3/jsx/main.jsx",
         "Lesson22/Classwork/1/build/bundle": "./Lesson22/Classwork/1/src/main.js",
         "Lesson22/Classwork/3/build/bundle": "./Lesson22/Classwork/3/src/main.jsx",
+        "Lesson24/Classwork/1/build/bundle": "./Lesson24/Classwork/1/jsx/main.jsx",
+        "Lesson24/Classwork/2/build/bundle": "./Lesson24/Classwork/2/jsx/main.jsx",
+        "Lesson24/Classwork/3/build/bundle": "./Lesson24/Classwork/3/jsx/main.jsx",
     } ,
 
     output: {
@@ -35,7 +38,7 @@ module.exports = {
                 loader: "babel-loader",
                 query:
                 {
-                    presets: ['react']
+                    presets: ['es2015','react']
                 }
             }
         ]
