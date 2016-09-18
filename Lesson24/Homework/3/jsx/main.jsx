@@ -5,6 +5,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 import List from './list.jsx'
 import Table from './table.jsx'
+import User from './user.jsx'
 
 
 class App extends React.Component{
@@ -41,5 +42,8 @@ ReactDOM.render(
             <IndexRoute component={List}/>
             <Route key="1" path="listView" component={List}/>
             <Route key="2" path="tableView" component={Table}/>
+            
+            <Route path="listView/:id" component={User}/>
+            <Route path="tableView/:id" component={User}/>
         </Route>
     </Router>,document.getElementById("example"))

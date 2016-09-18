@@ -5,7 +5,7 @@ export default class List extends React.Component {
     render() {
         return(
                 <ul>
-                    {users.map(user => <li>First Name: {user.first_name}, Last Name: {user.last_name}</li>)}
+                    {users.map(user => <li key={user.id}>First Name: {user.first_name}, Last Name: {user.last_name}</li>)}
                 </ul>
       )}
 } 

@@ -62,13 +62,17 @@
 
 	var _reactAddonsCssTransitionGroup2 = _interopRequireDefault(_reactAddonsCssTransitionGroup);
 
-	var _list = __webpack_require__(567);
+	var _list = __webpack_require__(570);
 
 	var _list2 = _interopRequireDefault(_list);
 
-	var _table = __webpack_require__(569);
+	var _table = __webpack_require__(572);
 
 	var _table2 = _interopRequireDefault(_table);
+
+	var _user = __webpack_require__(573);
+
+	var _user2 = _interopRequireDefault(_user);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -145,7 +149,9 @@
 	        { path: '/', component: App },
 	        _react2.default.createElement(_reactRouter.IndexRoute, { component: _list2.default }),
 	        _react2.default.createElement(_reactRouter.Route, { key: '1', path: 'listView', component: _list2.default }),
-	        _react2.default.createElement(_reactRouter.Route, { key: '2', path: 'tableView', component: _table2.default })
+	        _react2.default.createElement(_reactRouter.Route, { key: '2', path: 'tableView', component: _table2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'listView/:id', component: _user2.default }),
+	        _react2.default.createElement(_reactRouter.Route, { path: 'tableView/:id', component: _user2.default })
 	    )
 	), document.getElementById("example"));
 
@@ -28641,7 +28647,10 @@
 	module.exports = ReactTransitionEvents;
 
 /***/ },
-/* 567 */
+/* 567 */,
+/* 568 */,
+/* 569 */,
+/* 570 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28656,7 +28665,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _arr = __webpack_require__(568);
+	var _arr = __webpack_require__(571);
+
+	var _reactRouter = __webpack_require__(486);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28685,10 +28696,15 @@
 	                    return _react2.default.createElement(
 	                        'li',
 	                        { key: user.id },
-	                        'First Name: ',
-	                        user.first_name,
-	                        ', Last Name: ',
-	                        user.last_name
+	                        _react2.default.createElement(
+	                            _reactRouter.Link,
+	                            { to: { pathname: '/listView/:' + user.id,
+	                                    query: { first_name: user.first_name, last_name: user.last_name, email: user.email, gender: user.gender, ip_address: user.ip_address, id: user.id } } },
+	                            'First Name: ',
+	                            user.first_name,
+	                            ', Last Name: ',
+	                            user.last_name
+	                        )
 	                    );
 	                })
 	            );
@@ -28701,7 +28717,7 @@
 	exports.default = List;
 
 /***/ },
-/* 568 */
+/* 571 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -28714,7 +28730,7 @@
 	exports.users = users;
 
 /***/ },
-/* 569 */
+/* 572 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -28729,7 +28745,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _arr = __webpack_require__(568);
+	var _arr = __webpack_require__(571);
+
+	var _reactRouter = __webpack_require__(486);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -28783,11 +28801,16 @@
 	                    _arr.users.map(function (user) {
 	                        return _react2.default.createElement(
 	                            'tr',
-	                            { key: user.id },
+	                            null,
 	                            _react2.default.createElement(
 	                                'td',
 	                                null,
-	                                user.first_name
+	                                _react2.default.createElement(
+	                                    _reactRouter.Link,
+	                                    { to: { pathname: '/tableView/:' + user.id,
+	                                            query: { first_name: user.first_name, last_name: user.last_name, email: user.email, gender: user.gender, ip_address: user.ip_address, id: user.id } } },
+	                                    user.first_name
+	                                )
 	                            ),
 	                            _react2.default.createElement(
 	                                'td',
@@ -28810,6 +28833,93 @@
 	}(_react2.default.Component);
 
 	exports.default = Table;
+
+/***/ },
+/* 573 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _arr = __webpack_require__(571);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var User = function (_React$Component) {
+	    _inherits(User, _React$Component);
+
+	    function User(props) {
+	        _classCallCheck(this, User);
+
+	        return _possibleConstructorReturn(this, (User.__proto__ || Object.getPrototypeOf(User)).call(this, props));
+	    }
+
+	    _createClass(User, [{
+	        key: 'render',
+	        value: function render() {
+	            var location = this.props.location;
+	            var first = location.query.first_name;
+	            return _react2.default.createElement(
+	                'div',
+	                null,
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'First Name:',
+	                    first,
+	                    ' '
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'Last Name:',
+	                    location.query.last_name,
+	                    ' '
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'Email:',
+	                    location.query.email,
+	                    ' '
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'Gender:',
+	                    location.query.gender,
+	                    ' '
+	                ),
+	                _react2.default.createElement(
+	                    'p',
+	                    null,
+	                    'IP address:',
+	                    location.query.ip_address,
+	                    ' '
+	                )
+	            );
+	        }
+	    }]);
+
+	    return User;
+	}(_react2.default.Component);
+
+	exports.default = User;
 
 /***/ }
 /******/ ]);
